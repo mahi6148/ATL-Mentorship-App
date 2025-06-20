@@ -20,10 +20,10 @@ class _ProfileState extends State<Profilescreen> {
   final TextEditingController universityController = TextEditingController();
   final TextEditingController rollNoController = TextEditingController();
   final TextEditingController branchController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
   final TextEditingController districtController = TextEditingController();
 
   String _selectedGender = 'Male';
+  String _selectedBranch='CSE';
   final ImagePicker _picker = ImagePicker();
 
   Future<void> _pickImage() async {
@@ -44,7 +44,7 @@ class _ProfileState extends State<Profilescreen> {
     universityController.dispose();
     rollNoController.dispose();
     branchController.dispose();
-    addressController.dispose();
+    //addressController.dispose();
     districtController.dispose();
     super.dispose();
   }
@@ -108,18 +108,12 @@ class _ProfileState extends State<Profilescreen> {
             _buildTextField("College", collegeController),
             _buildTextField("University", universityController),
             _buildTextField("Roll No", rollNoController),
-            _buildTextField("Branch", branchController),
-            _buildTextField("Address", addressController),
+            _buildBranchDropdown(),
             _buildTextField("District", districtController),
             const SizedBox(height: 20),
             Row(
               children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: _isEditing ? () => _showResetPasswordDialog(context) : null,
-                    child: const Text("Reset password"),
-                  ),
-                ),
+
                 const SizedBox(width: 16),
                 Expanded(
                   child: ElevatedButton(
@@ -190,133 +184,36 @@ class _ProfileState extends State<Profilescreen> {
       ),
     );
   }
-
-  Future<void> _showResetPasswordDialog(BuildContext context) async {
-    final oldPasswordController = TextEditingController();
-    final newPasswordController = TextEditingController();
-    final confirmPasswordController = TextEditingController();
-
-    bool submitted = false;
-    String? errorOld;
-    String? errorNew;
-    String? errorConfirm;
-
-    bool newPasswordVisible = false;
-    bool confirmPasswordVisible = false;
-
-    await showDialog(
-      context: context,
-      builder: (context) {
-        return StatefulBuilder(builder: (context, setState) {
-          void validateAllFields() {
-            setState(() {
-              errorOld = oldPasswordController.text.isEmpty ? "Please enter old password" : null;
-
-              errorNew = newPasswordController.text.isEmpty ? "Please enter new password" : null;
-
-              if (confirmPasswordController.text.isEmpty) {
-                errorConfirm = "Please confirm password";
-              } else if (newPasswordController.text != confirmPasswordController.text) {
-                errorConfirm = "Passwords do not match";
-              } else {
-                errorConfirm = null;
-              }
-            });
-          }
-
-          return AlertDialog(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            title: const Center(
-              child: Text("Reset Password", style: TextStyle(fontWeight: FontWeight.bold)),
-            ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: oldPasswordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: "Old Password",
-                    border: const OutlineInputBorder(),
-                    errorText: submitted ? errorOld : null,
-                    errorStyle: const TextStyle(color: Colors.red),
-                  ),
-                  onChanged: (_) => submitted ? validateAllFields() : null,
-                ),
-                const SizedBox(height: 10),
-                TextField(
-                  controller: newPasswordController,
-                  obscureText: !newPasswordVisible,
-                  decoration: InputDecoration(
-                    hintText: "New Password",
-                    border: const OutlineInputBorder(),
-                    errorText: submitted ? errorNew : null,
-                    errorStyle: const TextStyle(color: Colors.red),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        newPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          newPasswordVisible = !newPasswordVisible;
-                        });
-                      },
-                    ),
-                  ),
-                  onChanged: (_) => submitted ? validateAllFields() : null,
-                ),
-                const SizedBox(height: 10),
-                TextField(
-                  controller: confirmPasswordController,
-                  obscureText: !confirmPasswordVisible,
-                  decoration: InputDecoration(
-                    hintText: "Confirm Password",
-                    border: const OutlineInputBorder(),
-                    errorText: submitted ? errorConfirm : null,
-                    errorStyle: const TextStyle(color: Colors.red),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        confirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          confirmPasswordVisible = !confirmPasswordVisible;
-                        });
-                      },
-                    ),
-                  ),
-                  onChanged: (_) => submitted ? validateAllFields() : null,
-                ),
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text("Cancel"),
-              ),
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    submitted = true;
-                  });
-                  validateAllFields();
-
-                  if (errorOld == null && errorNew == null && errorConfirm == null) {
-                    Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Password reset successfully"),
-                        backgroundColor: Colors.green,
-                      ),
-                    );
-                  }
-                },
-                child: const Text("Reset"),
-              ),
-            ],
-          );
-        });
-      },
+  Widget _buildBranchDropdown() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: InputDecorator(
+        decoration: const InputDecoration(
+          labelText: 'Branch',
+          border: OutlineInputBorder(),
+        ),
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<String>(
+            value: _selectedBranch,
+            isExpanded: true,
+            items: ['CSE', 'EEE', 'Other'].map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            onChanged: _isEditing
+                ? (String? newValue) {
+              setState(() {
+                _selectedBranch = newValue!;
+              });
+            }
+                : null,
+          ),
+        ),
+      ),
     );
   }
+
+
 }

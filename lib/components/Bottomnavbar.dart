@@ -18,13 +18,13 @@ class BottomNavbarWidget extends StatelessWidget {
       showUnselectedLabels: true,
       type: BottomNavigationBarType.fixed,
       selectedItemColor: Colors.white,
-      // unselectedItemColor: Colors.blueGrey,
+      unselectedItemColor: Colors.black87,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: ImageIcon(AssetImage('assets/icons/Checklist.png')),
+          icon: ImageIcon(AssetImage('assets/icons/Checklist.png'),size: 30,),
           label: 'Attendance',
         ),
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home',),
         BottomNavigationBarItem(
           icon: ImageIcon(AssetImage('assets/icons/Books.png'), size: 40),
           label: 'Resources',
