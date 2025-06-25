@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+
 class Profilescreen extends StatefulWidget {
   const Profilescreen({super.key});
 
@@ -196,7 +197,7 @@ class _ProfileState extends State<Profilescreen> {
           child: DropdownButton<String>(
             value: _selectedBranch,
             isExpanded: true,
-            items: ['CSE', 'EEE', 'Other'].map((String value) {
+            items: ['CSE', 'CSIT','CSE (Allied Specializations)','ECE','ECE (Allied Specializations)','EEE', 'MECH ENGG','MECH ENGG (Allied Specializations)','Other'].map((String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(value),
