@@ -28,6 +28,7 @@ class attendanceTable extends amplify_core.Model {
   static const classType = const _attendanceTableModelType();
   final String id;
   final UserTable? _user;
+  final amplify_core.TemporalDate? _date;
   final double? _longitude;
   final double? _latitude;
   final int? _no_of_boys;
@@ -48,149 +49,156 @@ class attendanceTable extends amplify_core.Model {
 
   @override
   getInstanceType() => classType;
-  
+
   @Deprecated('[getId] is being deprecated in favor of custom primary key feature. Use getter [modelIdentifier] to get model identifier.')
   @override
   String getId() => id;
-  
+
   attendanceTableModelIdentifier get modelIdentifier {
-      return attendanceTableModelIdentifier(
+    return attendanceTableModelIdentifier(
         id: id
-      );
+    );
   }
-  
+
   UserTable? get user {
     return _user;
   }
-  
+
+  amplify_core.TemporalDate? get date {
+    return _date;
+  }
+
   double? get longitude {
     return _longitude;
   }
-  
+
   double? get latitude {
     return _latitude;
   }
-  
+
   int? get no_of_boys {
     return _no_of_boys;
   }
-  
+
   int? get no_of_girls {
     return _no_of_girls;
   }
-  
+
   int? get total {
     return _total;
   }
-  
+
   int? get teachers {
     return _teachers;
   }
-  
+
   String? get photo {
     return _photo;
   }
-  
+
   amplify_core.TemporalTime? get start_time {
     return _start_time;
   }
-  
+
   amplify_core.TemporalTime? get end_time {
     return _end_time;
   }
-  
+
   String? get class_attended {
     return _class_attended;
   }
-  
+
   String? get module_name {
     return _module_name;
   }
-  
+
   int? get module_no {
     return _module_no;
   }
-  
+
   String? get remarks {
     return _remarks;
   }
-  
+
   amplify_core.TemporalTimestamp? get timestamp {
     return _timestamp;
   }
-  
+
   String? get topics_covered {
     return _topics_covered;
   }
-  
+
   amplify_core.TemporalDateTime? get createdAt {
     return _createdAt;
   }
-  
+
   amplify_core.TemporalDateTime? get updatedAt {
     return _updatedAt;
   }
-  
-  const attendanceTable._internal({required this.id, user, longitude, latitude, no_of_boys, no_of_girls, total, teachers, photo, start_time, end_time, class_attended, module_name, module_no, remarks, timestamp, topics_covered, createdAt, updatedAt}): _user = user, _longitude = longitude, _latitude = latitude, _no_of_boys = no_of_boys, _no_of_girls = no_of_girls, _total = total, _teachers = teachers, _photo = photo, _start_time = start_time, _end_time = end_time, _class_attended = class_attended, _module_name = module_name, _module_no = module_no, _remarks = remarks, _timestamp = timestamp, _topics_covered = topics_covered, _createdAt = createdAt, _updatedAt = updatedAt;
-  
-  factory attendanceTable({String? id, UserTable? user, double? longitude, double? latitude, int? no_of_boys, int? no_of_girls, int? total, int? teachers, String? photo, amplify_core.TemporalTime? start_time, amplify_core.TemporalTime? end_time, String? class_attended, String? module_name, int? module_no, String? remarks, amplify_core.TemporalTimestamp? timestamp, String? topics_covered}) {
+
+  const attendanceTable._internal({required this.id, user, date, longitude, latitude, no_of_boys, no_of_girls, total, teachers, photo, start_time, end_time, class_attended, module_name, module_no, remarks, timestamp, topics_covered, createdAt, updatedAt}): _user = user, _date = date, _longitude = longitude, _latitude = latitude, _no_of_boys = no_of_boys, _no_of_girls = no_of_girls, _total = total, _teachers = teachers, _photo = photo, _start_time = start_time, _end_time = end_time, _class_attended = class_attended, _module_name = module_name, _module_no = module_no, _remarks = remarks, _timestamp = timestamp, _topics_covered = topics_covered, _createdAt = createdAt, _updatedAt = updatedAt;
+
+  factory attendanceTable({String? id, UserTable? user, amplify_core.TemporalDate? date, double? longitude, double? latitude, int? no_of_boys, int? no_of_girls, int? total, int? teachers, String? photo, amplify_core.TemporalTime? start_time, amplify_core.TemporalTime? end_time, String? class_attended, String? module_name, int? module_no, String? remarks, amplify_core.TemporalTimestamp? timestamp, String? topics_covered}) {
     return attendanceTable._internal(
-      id: id == null ? amplify_core.UUID.getUUID() : id,
-      user: user,
-      longitude: longitude,
-      latitude: latitude,
-      no_of_boys: no_of_boys,
-      no_of_girls: no_of_girls,
-      total: total,
-      teachers: teachers,
-      photo: photo,
-      start_time: start_time,
-      end_time: end_time,
-      class_attended: class_attended,
-      module_name: module_name,
-      module_no: module_no,
-      remarks: remarks,
-      timestamp: timestamp,
-      topics_covered: topics_covered);
+        id: id == null ? amplify_core.UUID.getUUID() : id,
+        user: user,
+        date: date,
+        longitude: longitude,
+        latitude: latitude,
+        no_of_boys: no_of_boys,
+        no_of_girls: no_of_girls,
+        total: total,
+        teachers: teachers,
+        photo: photo,
+        start_time: start_time,
+        end_time: end_time,
+        class_attended: class_attended,
+        module_name: module_name,
+        module_no: module_no,
+        remarks: remarks,
+        timestamp: timestamp,
+        topics_covered: topics_covered);
   }
-  
+
   bool equals(Object other) {
     return this == other;
   }
-  
+
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is attendanceTable &&
-      id == other.id &&
-      _user == other._user &&
-      _longitude == other._longitude &&
-      _latitude == other._latitude &&
-      _no_of_boys == other._no_of_boys &&
-      _no_of_girls == other._no_of_girls &&
-      _total == other._total &&
-      _teachers == other._teachers &&
-      _photo == other._photo &&
-      _start_time == other._start_time &&
-      _end_time == other._end_time &&
-      _class_attended == other._class_attended &&
-      _module_name == other._module_name &&
-      _module_no == other._module_no &&
-      _remarks == other._remarks &&
-      _timestamp == other._timestamp &&
-      _topics_covered == other._topics_covered;
+        id == other.id &&
+        _user == other._user &&
+        _date == other._date &&
+        _longitude == other._longitude &&
+        _latitude == other._latitude &&
+        _no_of_boys == other._no_of_boys &&
+        _no_of_girls == other._no_of_girls &&
+        _total == other._total &&
+        _teachers == other._teachers &&
+        _photo == other._photo &&
+        _start_time == other._start_time &&
+        _end_time == other._end_time &&
+        _class_attended == other._class_attended &&
+        _module_name == other._module_name &&
+        _module_no == other._module_no &&
+        _remarks == other._remarks &&
+        _timestamp == other._timestamp &&
+        _topics_covered == other._topics_covered;
   }
-  
+
   @override
   int get hashCode => toString().hashCode;
-  
+
   @override
   String toString() {
     var buffer = new StringBuffer();
-    
+
     buffer.write("attendanceTable {");
     buffer.write("id=" + "$id" + ", ");
     buffer.write("user=" + (_user != null ? _user!.toString() : "null") + ", ");
+    buffer.write("date=" + (_date != null ? _date!.format() : "null") + ", ");
     buffer.write("longitude=" + (_longitude != null ? _longitude!.toString() : "null") + ", ");
     buffer.write("latitude=" + (_latitude != null ? _latitude!.toString() : "null") + ", ");
     buffer.write("no_of_boys=" + (_no_of_boys != null ? _no_of_boys!.toString() : "null") + ", ");
@@ -209,33 +217,35 @@ class attendanceTable extends amplify_core.Model {
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
-    
+
     return buffer.toString();
   }
-  
-  attendanceTable copyWith({UserTable? user, double? longitude, double? latitude, int? no_of_boys, int? no_of_girls, int? total, int? teachers, String? photo, amplify_core.TemporalTime? start_time, amplify_core.TemporalTime? end_time, String? class_attended, String? module_name, int? module_no, String? remarks, amplify_core.TemporalTimestamp? timestamp, String? topics_covered}) {
+
+  attendanceTable copyWith({UserTable? user, amplify_core.TemporalDate? date, double? longitude, double? latitude, int? no_of_boys, int? no_of_girls, int? total, int? teachers, String? photo, amplify_core.TemporalTime? start_time, amplify_core.TemporalTime? end_time, String? class_attended, String? module_name, int? module_no, String? remarks, amplify_core.TemporalTimestamp? timestamp, String? topics_covered}) {
     return attendanceTable._internal(
-      id: id,
-      user: user ?? this.user,
-      longitude: longitude ?? this.longitude,
-      latitude: latitude ?? this.latitude,
-      no_of_boys: no_of_boys ?? this.no_of_boys,
-      no_of_girls: no_of_girls ?? this.no_of_girls,
-      total: total ?? this.total,
-      teachers: teachers ?? this.teachers,
-      photo: photo ?? this.photo,
-      start_time: start_time ?? this.start_time,
-      end_time: end_time ?? this.end_time,
-      class_attended: class_attended ?? this.class_attended,
-      module_name: module_name ?? this.module_name,
-      module_no: module_no ?? this.module_no,
-      remarks: remarks ?? this.remarks,
-      timestamp: timestamp ?? this.timestamp,
-      topics_covered: topics_covered ?? this.topics_covered);
+        id: id,
+        user: user ?? this.user,
+        date: date ?? this.date,
+        longitude: longitude ?? this.longitude,
+        latitude: latitude ?? this.latitude,
+        no_of_boys: no_of_boys ?? this.no_of_boys,
+        no_of_girls: no_of_girls ?? this.no_of_girls,
+        total: total ?? this.total,
+        teachers: teachers ?? this.teachers,
+        photo: photo ?? this.photo,
+        start_time: start_time ?? this.start_time,
+        end_time: end_time ?? this.end_time,
+        class_attended: class_attended ?? this.class_attended,
+        module_name: module_name ?? this.module_name,
+        module_no: module_no ?? this.module_no,
+        remarks: remarks ?? this.remarks,
+        timestamp: timestamp ?? this.timestamp,
+        topics_covered: topics_covered ?? this.topics_covered);
   }
-  
+
   attendanceTable copyWithModelFieldValues({
     ModelFieldValue<UserTable?>? user,
+    ModelFieldValue<amplify_core.TemporalDate?>? date,
     ModelFieldValue<double?>? longitude,
     ModelFieldValue<double?>? latitude,
     ModelFieldValue<int?>? no_of_boys,
@@ -253,58 +263,61 @@ class attendanceTable extends amplify_core.Model {
     ModelFieldValue<String?>? topics_covered
   }) {
     return attendanceTable._internal(
-      id: id,
-      user: user == null ? this.user : user.value,
-      longitude: longitude == null ? this.longitude : longitude.value,
-      latitude: latitude == null ? this.latitude : latitude.value,
-      no_of_boys: no_of_boys == null ? this.no_of_boys : no_of_boys.value,
-      no_of_girls: no_of_girls == null ? this.no_of_girls : no_of_girls.value,
-      total: total == null ? this.total : total.value,
-      teachers: teachers == null ? this.teachers : teachers.value,
-      photo: photo == null ? this.photo : photo.value,
-      start_time: start_time == null ? this.start_time : start_time.value,
-      end_time: end_time == null ? this.end_time : end_time.value,
-      class_attended: class_attended == null ? this.class_attended : class_attended.value,
-      module_name: module_name == null ? this.module_name : module_name.value,
-      module_no: module_no == null ? this.module_no : module_no.value,
-      remarks: remarks == null ? this.remarks : remarks.value,
-      timestamp: timestamp == null ? this.timestamp : timestamp.value,
-      topics_covered: topics_covered == null ? this.topics_covered : topics_covered.value
+        id: id,
+        user: user == null ? this.user : user.value,
+        date: date == null ? this.date : date.value,
+        longitude: longitude == null ? this.longitude : longitude.value,
+        latitude: latitude == null ? this.latitude : latitude.value,
+        no_of_boys: no_of_boys == null ? this.no_of_boys : no_of_boys.value,
+        no_of_girls: no_of_girls == null ? this.no_of_girls : no_of_girls.value,
+        total: total == null ? this.total : total.value,
+        teachers: teachers == null ? this.teachers : teachers.value,
+        photo: photo == null ? this.photo : photo.value,
+        start_time: start_time == null ? this.start_time : start_time.value,
+        end_time: end_time == null ? this.end_time : end_time.value,
+        class_attended: class_attended == null ? this.class_attended : class_attended.value,
+        module_name: module_name == null ? this.module_name : module_name.value,
+        module_no: module_no == null ? this.module_no : module_no.value,
+        remarks: remarks == null ? this.remarks : remarks.value,
+        timestamp: timestamp == null ? this.timestamp : timestamp.value,
+        topics_covered: topics_covered == null ? this.topics_covered : topics_covered.value
     );
   }
-  
-  attendanceTable.fromJson(Map<String, dynamic> json)  
-    : id = json['id'],
-      _user = json['user'] != null
-        ? json['user']['serializedData'] != null
-          ? UserTable.fromJson(new Map<String, dynamic>.from(json['user']['serializedData']))
-          : UserTable.fromJson(new Map<String, dynamic>.from(json['user']))
-        : null,
-      _longitude = (json['longitude'] as num?)?.toDouble(),
-      _latitude = (json['latitude'] as num?)?.toDouble(),
-      _no_of_boys = (json['no_of_boys'] as num?)?.toInt(),
-      _no_of_girls = (json['no_of_girls'] as num?)?.toInt(),
-      _total = (json['total'] as num?)?.toInt(),
-      _teachers = (json['teachers'] as num?)?.toInt(),
-      _photo = json['photo'],
-      _start_time = json['start_time'] != null ? amplify_core.TemporalTime.fromString(json['start_time']) : null,
-      _end_time = json['end_time'] != null ? amplify_core.TemporalTime.fromString(json['end_time']) : null,
-      _class_attended = json['class_attended'],
-      _module_name = json['module_name'],
-      _module_no = (json['module_no'] as num?)?.toInt(),
-      _remarks = json['remarks'],
-      _timestamp = json['timestamp'] != null ? amplify_core.TemporalTimestamp.fromSeconds(json['timestamp']) : null,
-      _topics_covered = json['topics_covered'],
-      _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null,
-      _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
-  
+
+  attendanceTable.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        _user = json['user'] != null
+            ? json['user']['serializedData'] != null
+            ? UserTable.fromJson(new Map<String, dynamic>.from(json['user']['serializedData']))
+            : UserTable.fromJson(new Map<String, dynamic>.from(json['user']))
+            : null,
+        _date = json['date'] != null ? amplify_core.TemporalDate.fromString(json['date']) : null,
+        _longitude = (json['longitude'] as num?)?.toDouble(),
+        _latitude = (json['latitude'] as num?)?.toDouble(),
+        _no_of_boys = (json['no_of_boys'] as num?)?.toInt(),
+        _no_of_girls = (json['no_of_girls'] as num?)?.toInt(),
+        _total = (json['total'] as num?)?.toInt(),
+        _teachers = (json['teachers'] as num?)?.toInt(),
+        _photo = json['photo'],
+        _start_time = json['start_time'] != null ? amplify_core.TemporalTime.fromString(json['start_time']) : null,
+        _end_time = json['end_time'] != null ? amplify_core.TemporalTime.fromString(json['end_time']) : null,
+        _class_attended = json['class_attended'],
+        _module_name = json['module_name'],
+        _module_no = (json['module_no'] as num?)?.toInt(),
+        _remarks = json['remarks'],
+        _timestamp = json['timestamp'] != null ? amplify_core.TemporalTimestamp.fromSeconds(json['timestamp']) : null,
+        _topics_covered = json['topics_covered'],
+        _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null,
+        _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
+
   Map<String, dynamic> toJson() => {
-    'id': id, 'user': _user?.toJson(), 'longitude': _longitude, 'latitude': _latitude, 'no_of_boys': _no_of_boys, 'no_of_girls': _no_of_girls, 'total': _total, 'teachers': _teachers, 'photo': _photo, 'start_time': _start_time?.format(), 'end_time': _end_time?.format(), 'class_attended': _class_attended, 'module_name': _module_name, 'module_no': _module_no, 'remarks': _remarks, 'timestamp': _timestamp?.toSeconds(), 'topics_covered': _topics_covered, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'user': _user?.toJson(), 'date': _date?.format(), 'longitude': _longitude, 'latitude': _latitude, 'no_of_boys': _no_of_boys, 'no_of_girls': _no_of_girls, 'total': _total, 'teachers': _teachers, 'photo': _photo, 'start_time': _start_time?.format(), 'end_time': _end_time?.format(), 'class_attended': _class_attended, 'module_name': _module_name, 'module_no': _module_no, 'remarks': _remarks, 'timestamp': _timestamp?.toSeconds(), 'topics_covered': _topics_covered, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
-  
+
   Map<String, Object?> toMap() => {
     'id': id,
     'user': _user,
+    'date': _date,
     'longitude': _longitude,
     'latitude': _latitude,
     'no_of_boys': _no_of_boys,
@@ -327,8 +340,9 @@ class attendanceTable extends amplify_core.Model {
   static final amplify_core.QueryModelIdentifier<attendanceTableModelIdentifier> MODEL_IDENTIFIER = amplify_core.QueryModelIdentifier<attendanceTableModelIdentifier>();
   static final ID = amplify_core.QueryField(fieldName: "id");
   static final USER = amplify_core.QueryField(
-    fieldName: "user",
-    fieldType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.model, ofModelName: 'UserTable'));
+      fieldName: "user",
+      fieldType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.model, ofModelName: 'UserTable'));
+  static final DATE = amplify_core.QueryField(fieldName: "date");
   static final LONGITUDE = amplify_core.QueryField(fieldName: "longitude");
   static final LATITUDE = amplify_core.QueryField(fieldName: "latitude");
   static final NO_OF_BOYS = amplify_core.QueryField(fieldName: "no_of_boys");
@@ -347,150 +361,156 @@ class attendanceTable extends amplify_core.Model {
   static var schema = amplify_core.Model.defineSchema(define: (amplify_core.ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "attendanceTable";
     modelSchemaDefinition.pluralName = "attendanceTables";
-    
+
     modelSchemaDefinition.authRules = [
       amplify_core.AuthRule(
-        authStrategy: amplify_core.AuthStrategy.PUBLIC,
-        provider: amplify_core.AuthRuleProvider.IAM,
-        operations: const [
-          amplify_core.ModelOperation.CREATE,
-          amplify_core.ModelOperation.UPDATE,
-          amplify_core.ModelOperation.DELETE,
-          amplify_core.ModelOperation.READ
-        ]),
+          authStrategy: amplify_core.AuthStrategy.PUBLIC,
+          provider: amplify_core.AuthRuleProvider.IAM,
+          operations: const [
+            amplify_core.ModelOperation.CREATE,
+            amplify_core.ModelOperation.UPDATE,
+            amplify_core.ModelOperation.DELETE,
+            amplify_core.ModelOperation.READ
+          ]),
       amplify_core.AuthRule(
-        authStrategy: amplify_core.AuthStrategy.PRIVATE,
-        operations: const [
-          amplify_core.ModelOperation.CREATE,
-          amplify_core.ModelOperation.UPDATE,
-          amplify_core.ModelOperation.DELETE,
-          amplify_core.ModelOperation.READ
-        ])
+          authStrategy: amplify_core.AuthStrategy.PRIVATE,
+          operations: const [
+            amplify_core.ModelOperation.CREATE,
+            amplify_core.ModelOperation.UPDATE,
+            amplify_core.ModelOperation.DELETE,
+            amplify_core.ModelOperation.READ
+          ])
     ];
-    
+
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.id());
-    
+
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.belongsTo(
-      key: attendanceTable.USER,
-      isRequired: false,
-      targetNames: ['user_id'],
-      ofModelName: 'UserTable'
+        key: attendanceTable.USER,
+        isRequired: false,
+        targetNames: ['user_id'],
+        ofModelName: 'UserTable'
     ));
-    
+
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: attendanceTable.LONGITUDE,
-      isRequired: false,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.double)
+        key: attendanceTable.DATE,
+        isRequired: false,
+        ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.date)
     ));
-    
+
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: attendanceTable.LATITUDE,
-      isRequired: false,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.double)
+        key: attendanceTable.LONGITUDE,
+        isRequired: false,
+        ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.double)
     ));
-    
+
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: attendanceTable.NO_OF_BOYS,
-      isRequired: false,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.int)
+        key: attendanceTable.LATITUDE,
+        isRequired: false,
+        ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.double)
     ));
-    
+
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: attendanceTable.NO_OF_GIRLS,
-      isRequired: false,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.int)
+        key: attendanceTable.NO_OF_BOYS,
+        isRequired: false,
+        ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.int)
     ));
-    
+
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: attendanceTable.TOTAL,
-      isRequired: false,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.int)
+        key: attendanceTable.NO_OF_GIRLS,
+        isRequired: false,
+        ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.int)
     ));
-    
+
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: attendanceTable.TEACHERS,
-      isRequired: false,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.int)
+        key: attendanceTable.TOTAL,
+        isRequired: false,
+        ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.int)
     ));
-    
+
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: attendanceTable.PHOTO,
-      isRequired: false,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+        key: attendanceTable.TEACHERS,
+        isRequired: false,
+        ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.int)
     ));
-    
+
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: attendanceTable.START_TIME,
-      isRequired: false,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.time)
+        key: attendanceTable.PHOTO,
+        isRequired: false,
+        ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
-    
+
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: attendanceTable.END_TIME,
-      isRequired: false,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.time)
+        key: attendanceTable.START_TIME,
+        isRequired: false,
+        ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.time)
     ));
-    
+
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: attendanceTable.CLASS_ATTENDED,
-      isRequired: false,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+        key: attendanceTable.END_TIME,
+        isRequired: false,
+        ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.time)
     ));
-    
+
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: attendanceTable.MODULE_NAME,
-      isRequired: false,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+        key: attendanceTable.CLASS_ATTENDED,
+        isRequired: false,
+        ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
-    
+
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: attendanceTable.MODULE_NO,
-      isRequired: false,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.int)
+        key: attendanceTable.MODULE_NAME,
+        isRequired: false,
+        ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
-    
+
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: attendanceTable.REMARKS,
-      isRequired: false,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+        key: attendanceTable.MODULE_NO,
+        isRequired: false,
+        ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.int)
     ));
-    
+
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: attendanceTable.TIMESTAMP,
-      isRequired: false,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.timestamp)
+        key: attendanceTable.REMARKS,
+        isRequired: false,
+        ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
-    
+
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: attendanceTable.TOPICS_COVERED,
-      isRequired: false,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+        key: attendanceTable.TIMESTAMP,
+        isRequired: false,
+        ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.timestamp)
     ));
-    
+
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
+        key: attendanceTable.TOPICS_COVERED,
+        isRequired: false,
+        ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+    ));
+
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.nonQueryField(
-      fieldName: 'createdAt',
-      isRequired: false,
-      isReadOnly: true,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.dateTime)
+        fieldName: 'createdAt',
+        isRequired: false,
+        isReadOnly: true,
+        ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.dateTime)
     ));
-    
+
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.nonQueryField(
-      fieldName: 'updatedAt',
-      isRequired: false,
-      isReadOnly: true,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.dateTime)
+        fieldName: 'updatedAt',
+        isRequired: false,
+        isReadOnly: true,
+        ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.dateTime)
     ));
   });
 }
 
 class _attendanceTableModelType extends amplify_core.ModelType<attendanceTable> {
   const _attendanceTableModelType();
-  
+
   @override
   attendanceTable fromJson(Map<String, dynamic> jsonData) {
     return attendanceTable.fromJson(jsonData);
   }
-  
+
   @override
   String modelName() {
     return 'attendanceTable';
@@ -507,35 +527,35 @@ class attendanceTableModelIdentifier implements amplify_core.ModelIdentifier<att
   /** Create an instance of attendanceTableModelIdentifier using [id] the primary key. */
   const attendanceTableModelIdentifier({
     required this.id});
-  
+
   @override
   Map<String, dynamic> serializeAsMap() => (<String, dynamic>{
     'id': id
   });
-  
+
   @override
   List<Map<String, dynamic>> serializeAsList() => serializeAsMap()
-    .entries
-    .map((entry) => (<String, dynamic>{ entry.key: entry.value }))
-    .toList();
-  
+      .entries
+      .map((entry) => (<String, dynamic>{ entry.key: entry.value }))
+      .toList();
+
   @override
   String serializeAsString() => serializeAsMap().values.join('#');
-  
+
   @override
   String toString() => 'attendanceTableModelIdentifier(id: $id)';
-  
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
       return true;
     }
-    
+
     return other is attendanceTableModelIdentifier &&
-      id == other.id;
+        id == other.id;
   }
-  
+
   @override
   int get hashCode =>
-    id.hashCode;
+      id.hashCode;
 }

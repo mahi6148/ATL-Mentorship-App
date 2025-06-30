@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:atl_membership/models/ModelProvider.dart';
-import 'package:atl_membership/utils/SchoolsDetailsFirestoreService.dart';
+import 'package:atl_membership/services/SchoolsDetailsFirestoreService.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import '../controllers/AuthController.dart';

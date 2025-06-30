@@ -67,7 +67,7 @@ class AppDrawerWidget extends StatelessWidget {
                     routeName: '${Routes.HOME}${Routes.ACHIEVEMENTS}'),
                 const AppdrawerTile(
                     tileName: 'Suggestions',
-                    routeName: '${Routes.HOME}${Routes.SUGGESTION}'),
+                    routeName: '${Routes.HOME}${Routes.SUGGESTIONS}'),
                 const AppdrawerTile(
                     tileName: 'Help & Support',
                     routeName: '${Routes.HOME}${Routes.HELP}'),

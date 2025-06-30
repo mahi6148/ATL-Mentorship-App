@@ -1,8 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
+import '../controllers/AuthController.dart';
+import '../services/attendance_table_amplify_service.dart';
 
 class Attendancescreen extends StatefulWidget {
   const Attendancescreen({super.key});
@@ -33,6 +37,8 @@ class _AttendancescreenState extends State<Attendancescreen> {
   };
   XFile? _attendanceImage;
   final ImagePicker _picker = ImagePicker();
+  final authController = Get.put(AuthController());
+
 
   List<String> get selectedClasses =>
       options.entries.where((e) => e.value).map((e) => e.key).toList();
@@ -55,20 +61,97 @@ class _AttendancescreenState extends State<Attendancescreen> {
     _remarksController.addListener(() => setState(() {}));
   }
 
-  bool get _isFormValid {
-    return _startTimeController.text.isNotEmpty &&
-        _endTimeController.text.isNotEmpty&&
-        _teacherController.text.isNotEmpty&&
-        _moduleController.value.text.isNotEmpty&&
-        _boysController.value.text.isNotEmpty&&
-        _girlsController.value.text.isNotEmpty&&
-        _totalController.value.text.isNotEmpty&&
-        _mnameController.text.isNotEmpty&&
-        _topicsController.text.isNotEmpty&&
-        _remarksController.text.isNotEmpty&&
-        selectedClasses.isNotEmpty&&
-        _attendanceImage !=null;
+  Future<void> _isFormValid() async {
+    if (_startTimeController.text.isEmpty ||
+        _endTimeController.text.isEmpty ||
+        _teacherController.text.isEmpty ||
+        _moduleController.value.text.isEmpty ||
+        _boysController.value.text.isEmpty ||
+        _girlsController.value.text.isEmpty ||
+        _totalController.value.text.isEmpty ||
+        _mnameController.text.isEmpty ||
+        _topicsController.text.isEmpty ||
+        _remarksController.text.isEmpty ||
+        selectedClasses.isEmpty ||
+        _attendanceImage == null) {
+      Get.snackbar(
+        'Incomplete Form',
+        'Please fill in all fields',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red.withOpacity(0.7),
+        colorText: Colors.white,
+      );
+      return;
+    }
+
+    void _clearForm() {
+      _startTimeController.clear();
+      _endTimeController.clear();
+      _teacherController.clear();
+      _moduleController.clear();
+      _boysController.clear();
+      _girlsController.clear();
+      _totalController.clear();
+      _mnameController.clear();
+      _topicsController.clear();
+      _remarksController.clear();
+      _attendanceImage = null;
+      options.updateAll((key, value) => false);
+      _dateController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
+      _fetchLocation(); // Optional: re-fetch location
+      setState(() {});  // Refresh UI
+    }
+
+    try {
+      // Parse the date correctly from dd/MM/yyyy format
+      DateTime parsedDate = DateFormat('dd/MM/yyyy').parse(_dateController.text);
+
+      bool success = await AttendanceTableAmplifyService.saveAttendance(
+        start_time: _startTimeController.text,
+        end_time: _endTimeController.text,
+        teachers: _teacherController.text,
+        module_no: int.parse(_moduleController.text),
+        no_of_boys: int.parse(_boysController.text),
+        no_of_girls: int.parse(_girlsController.text),
+        total: int.parse(_totalController.text),
+        module_name: _mnameController.text,
+        topics_covered: _topicsController.text,
+        remarks: _remarksController.text,
+        class_attended: selectedClasses,
+        longitude: double.parse(_longitudeController.text),
+        latitude: double.parse(_latitudeController.text),
+        date: parsedDate,
+      );
+
+      if (success) {
+        _clearForm();
+        Get.snackbar(
+          'Success',
+          'Details saved successfully',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green.withOpacity(0.7),
+          colorText: Colors.white,
+        );
+      } else {
+        Get.snackbar(
+          'Error',
+          'Failed to save details',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to save details: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
   }
+
 
   Future<void> _pickAttendanceImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.camera);
@@ -396,13 +479,9 @@ class _AttendancescreenState extends State<Attendancescreen> {
                 width: width * 0.3,
                 height: 38,
                 child: ElevatedButton(
-                  onPressed: _isFormValid
-                      ? () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Attendance submitted')),
-                    );
-                  }
-                      : null, // disabled if form is incomplete
+                  onPressed: () async {
+                    await _isFormValid(); // Will check form and submit
+                  },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue),
                   child: const Text(
@@ -418,7 +497,3 @@ class _AttendancescreenState extends State<Attendancescreen> {
     );
   }
 }
-
-
-
-
