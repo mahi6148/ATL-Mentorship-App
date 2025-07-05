@@ -18,10 +18,10 @@ import 'ConnectivityController.dart';
 class UserController extends GetxController {
   // Observable properties
   final Rx<UserTable?> currentUser = Rx<UserTable?>(null);
-  final RxString userName = ''.obs;
+  final RxString? userName = ''.obs;
   final RxString email = ''.obs;
   final RxString phoneNumber = ''.obs;
-  final Rx<Color> profileColor = const Color(0xFF000000).obs;
+  final Rx<Color?> profileColor = const Color(0xFF000000).obs;
   final RxString userId = ''.obs;
   final RxBool isUserDataLoaded = false.obs;
   final RxBool isPolicyAccepted = false.obs;
@@ -29,6 +29,7 @@ class UserController extends GetxController {
   final RxBool shouldShowDialog = false.obs;
   final RxBool isInitialized = false.obs;
   final RxString userError = ''.obs;
+  final RxString teamId = ''.obs;
 
   // Dependencies
   late final CacheManager _cacheManager;
@@ -74,6 +75,8 @@ class UserController extends GetxController {
   }
 
   // Wait for controller to be ready
+
+  @override
   Future<void> onReady() async {
     if (_initCompleter != null && !_initCompleter!.isCompleted) {
       await _initCompleter!.future;
@@ -212,30 +215,31 @@ class UserController extends GetxController {
 
   void _handleOfflineMode() {
     isOfflineMode.value = true;
-    if (userName.value.isEmpty) {
+    if (userName!.value.isEmpty) {
       safePrint('Running in offline mode with cached data');
     }
   }
 
   void _updateUserDataFromCache(Map<String, dynamic> cachedData) {
-    userName.value = cachedData['userName'] ?? '';
+    userName?.value = cachedData['userName'] ?? '';
     email.value = cachedData['email'] ?? '';
     phoneNumber.value = cachedData['phoneNumber'] ?? '';
     userId.value = cachedData['userId'] ?? '';
     isPolicyAccepted.value = cachedData['isPolicyAccepted'] ?? false;
 
-    if (userName.value.isNotEmpty) {
+    if (userName!.value.isNotEmpty) {
       _updateProfileColor();
     }
   }
 
   Future<void> _updateUserData(UserTable user) async {
     currentUser.value = user;
-    userName.value = user.name ?? '';
+    userName?.value = user.name ?? '';
     email.value = user.email ?? '';
     phoneNumber.value = user.phone ?? '';
     userId.value = user.id;
     isPolicyAccepted.value = user.isPolicy ?? false;
+    teamId.value =user.team?.id??"default code";
 
     await _updateProfileColor();
     await _cacheUserData();
@@ -243,8 +247,8 @@ class UserController extends GetxController {
 
   Future<void> _updateProfileColor() async {
     try {
-      if (userName.value.isNotEmpty) {
-        profileColor.value = await getColorFromStringAsync(userName.value);
+      if (userName!.value.isNotEmpty) {
+        profileColor.value = await getColorFromStringAsync(userName!.value);
       }
     } catch (e) {
       if (kDebugMode) {
@@ -256,7 +260,7 @@ class UserController extends GetxController {
   Future<void> _cacheUserData() async {
     try {
       final userData = {
-        'userName': userName.value,
+        'userName': userName?.value,
         'email': email.value,
         'phoneNumber': phoneNumber.value,
         'userId': userId.value,
@@ -387,7 +391,7 @@ class UserController extends GetxController {
     required String phone,
     required String id,
   }) async {
-    userName.value = name;
+    userName?.value = name;
     email.value = emailAddress;
     phoneNumber.value = phone;
     userId.value = id;
@@ -422,7 +426,7 @@ class UserController extends GetxController {
         reg_no: rollNumber,
         email: email.value,
         phone: phoneNumber.value,
-        name: userName.value,
+        name: userName?.value,
         gender: gender,
         isPolicy: false,
       );
@@ -476,7 +480,7 @@ class UserController extends GetxController {
 
     // Reset all observable values
     currentUser.value = null;
-    userName.value = '';
+    userName?.value = '';
     email.value = '';
     phoneNumber.value = '';
     userId.value = '';
@@ -491,10 +495,10 @@ class UserController extends GetxController {
   // Getters for convenience
   bool get hasUserData => currentUser.value != null;
   bool get isUserComplete => hasUserData &&
-      userName.value.isNotEmpty &&
+      userName!.value.isNotEmpty &&
       email.value.isNotEmpty;
-  String get displayName => userName.value.isNotEmpty
-      ? userName.value
+  String get displayName => userName!.value.isNotEmpty
+      ? userName!.value
       : 'User';
   bool get hasError => userError.value.isNotEmpty;
   bool get isReady => isInitialized.value && !hasError;

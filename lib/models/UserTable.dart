@@ -37,6 +37,7 @@ class UserTable extends amplify_core.Model {
   final String? _district;
   final String? _mandal;
   final String? _college;
+  final amplify_core.TemporalDateTime? _updatedAt;
   final bool? _isPolicy;
   final UserTableGender? _gender;
   final String? _branch;
@@ -44,7 +45,6 @@ class UserTable extends amplify_core.Model {
   final List<SuggestionsTable>? _suggestion;
   final TeamTable? _team;
   final amplify_core.TemporalDateTime? _createdAt;
-  final amplify_core.TemporalDateTime? _updatedAt;
 
   @override
   getInstanceType() => classType;
@@ -95,6 +95,10 @@ class UserTable extends amplify_core.Model {
     return _college;
   }
   
+  amplify_core.TemporalDateTime? get updatedAt {
+    return _updatedAt;
+  }
+  
   bool? get isPolicy {
     return _isPolicy;
   }
@@ -123,13 +127,9 @@ class UserTable extends amplify_core.Model {
     return _createdAt;
   }
   
-  amplify_core.TemporalDateTime? get updatedAt {
-    return _updatedAt;
-  }
+  const UserTable._internal({required this.id, name, reg_no, email, phone, device_id, university, district, mandal, college, updatedAt, isPolicy, gender, branch, attendance, suggestion, team, createdAt}): _name = name, _reg_no = reg_no, _email = email, _phone = phone, _device_id = device_id, _university = university, _district = district, _mandal = mandal, _college = college, _updatedAt = updatedAt, _isPolicy = isPolicy, _gender = gender, _branch = branch, _attendance = attendance, _suggestion = suggestion, _team = team, _createdAt = createdAt;
   
-  const UserTable._internal({required this.id, name, reg_no, email, phone, device_id, university, district, mandal, college, isPolicy, gender, branch, attendance, suggestion, team, createdAt, updatedAt}): _name = name, _reg_no = reg_no, _email = email, _phone = phone, _device_id = device_id, _university = university, _district = district, _mandal = mandal, _college = college, _isPolicy = isPolicy, _gender = gender, _branch = branch, _attendance = attendance, _suggestion = suggestion, _team = team, _createdAt = createdAt, _updatedAt = updatedAt;
-  
-  factory UserTable({String? id, String? name, String? reg_no, String? email, String? phone, String? device_id, String? university, String? district, String? mandal, String? college, bool? isPolicy, UserTableGender? gender, String? branch, List<attendanceTable>? attendance, List<SuggestionsTable>? suggestion, TeamTable? team}) {
+  factory UserTable({String? id, String? name, String? reg_no, String? email, String? phone, String? device_id, String? university, String? district, String? mandal, String? college, amplify_core.TemporalDateTime? updatedAt, bool? isPolicy, UserTableGender? gender, String? branch, List<attendanceTable>? attendance, List<SuggestionsTable>? suggestion, TeamTable? team}) {
     return UserTable._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
       name: name,
@@ -141,6 +141,7 @@ class UserTable extends amplify_core.Model {
       district: district,
       mandal: mandal,
       college: college,
+      updatedAt: updatedAt,
       isPolicy: isPolicy,
       gender: gender,
       branch: branch,
@@ -167,6 +168,7 @@ class UserTable extends amplify_core.Model {
       _district == other._district &&
       _mandal == other._mandal &&
       _college == other._college &&
+      _updatedAt == other._updatedAt &&
       _isPolicy == other._isPolicy &&
       _gender == other._gender &&
       _branch == other._branch &&
@@ -193,18 +195,18 @@ class UserTable extends amplify_core.Model {
     buffer.write("district=" + "$_district" + ", ");
     buffer.write("mandal=" + "$_mandal" + ", ");
     buffer.write("college=" + "$_college" + ", ");
+    buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null") + ", ");
     buffer.write("isPolicy=" + (_isPolicy != null ? _isPolicy!.toString() : "null") + ", ");
     buffer.write("gender=" + (_gender != null ? amplify_core.enumToString(_gender)! : "null") + ", ");
     buffer.write("branch=" + "$_branch" + ", ");
     buffer.write("team=" + (_team != null ? _team!.toString() : "null") + ", ");
-    buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
-    buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
+    buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null"));
     buffer.write("}");
     
     return buffer.toString();
   }
   
-  UserTable copyWith({String? name, String? reg_no, String? email, String? phone, String? device_id, String? university, String? district, String? mandal, String? college, bool? isPolicy, UserTableGender? gender, String? branch, List<attendanceTable>? attendance, List<SuggestionsTable>? suggestion, TeamTable? team}) {
+  UserTable copyWith({String? name, String? reg_no, String? email, String? phone, String? device_id, String? university, String? district, String? mandal, String? college, amplify_core.TemporalDateTime? updatedAt, bool? isPolicy, UserTableGender? gender, String? branch, List<attendanceTable>? attendance, List<SuggestionsTable>? suggestion, TeamTable? team}) {
     return UserTable._internal(
       id: id,
       name: name ?? this.name,
@@ -216,6 +218,7 @@ class UserTable extends amplify_core.Model {
       district: district ?? this.district,
       mandal: mandal ?? this.mandal,
       college: college ?? this.college,
+      updatedAt: updatedAt ?? this.updatedAt,
       isPolicy: isPolicy ?? this.isPolicy,
       gender: gender ?? this.gender,
       branch: branch ?? this.branch,
@@ -234,6 +237,7 @@ class UserTable extends amplify_core.Model {
     ModelFieldValue<String?>? district,
     ModelFieldValue<String?>? mandal,
     ModelFieldValue<String?>? college,
+    ModelFieldValue<amplify_core.TemporalDateTime?>? updatedAt,
     ModelFieldValue<bool?>? isPolicy,
     ModelFieldValue<UserTableGender?>? gender,
     ModelFieldValue<String?>? branch,
@@ -252,6 +256,7 @@ class UserTable extends amplify_core.Model {
       district: district == null ? this.district : district.value,
       mandal: mandal == null ? this.mandal : mandal.value,
       college: college == null ? this.college : college.value,
+      updatedAt: updatedAt == null ? this.updatedAt : updatedAt.value,
       isPolicy: isPolicy == null ? this.isPolicy : isPolicy.value,
       gender: gender == null ? this.gender : gender.value,
       branch: branch == null ? this.branch : branch.value,
@@ -272,6 +277,7 @@ class UserTable extends amplify_core.Model {
       _district = json['district'],
       _mandal = json['mandal'],
       _college = json['college'],
+      _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null,
       _isPolicy = json['isPolicy'],
       _gender = amplify_core.enumFromString<UserTableGender>(json['gender'], UserTableGender.values),
       _branch = json['branch'],
@@ -306,11 +312,10 @@ class UserTable extends amplify_core.Model {
           ? TeamTable.fromJson(new Map<String, dynamic>.from(json['team']['serializedData']))
           : TeamTable.fromJson(new Map<String, dynamic>.from(json['team']))
         : null,
-      _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null,
-      _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
+      _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'name': _name, 'reg_no': _reg_no, 'email': _email, 'phone': _phone, 'device_id': _device_id, 'university': _university, 'district': _district, 'mandal': _mandal, 'college': _college, 'isPolicy': _isPolicy, 'gender': amplify_core.enumToString(_gender), 'branch': _branch, 'attendance': _attendance?.map((attendanceTable? e) => e?.toJson()).toList(), 'suggestion': _suggestion?.map((SuggestionsTable? e) => e?.toJson()).toList(), 'team': _team?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'name': _name, 'reg_no': _reg_no, 'email': _email, 'phone': _phone, 'device_id': _device_id, 'university': _university, 'district': _district, 'mandal': _mandal, 'college': _college, 'updatedAt': _updatedAt?.format(), 'isPolicy': _isPolicy, 'gender': amplify_core.enumToString(_gender), 'branch': _branch, 'attendance': _attendance?.map((attendanceTable? e) => e?.toJson()).toList(), 'suggestion': _suggestion?.map((SuggestionsTable? e) => e?.toJson()).toList(), 'team': _team?.toJson(), 'createdAt': _createdAt?.format()
   };
   
   Map<String, Object?> toMap() => {
@@ -324,14 +329,14 @@ class UserTable extends amplify_core.Model {
     'district': _district,
     'mandal': _mandal,
     'college': _college,
+    'updatedAt': _updatedAt,
     'isPolicy': _isPolicy,
     'gender': _gender,
     'branch': _branch,
     'attendance': _attendance,
     'suggestion': _suggestion,
     'team': _team,
-    'createdAt': _createdAt,
-    'updatedAt': _updatedAt
+    'createdAt': _createdAt
   };
 
   static final amplify_core.QueryModelIdentifier<UserTableModelIdentifier> MODEL_IDENTIFIER = amplify_core.QueryModelIdentifier<UserTableModelIdentifier>();
@@ -345,6 +350,7 @@ class UserTable extends amplify_core.Model {
   static final DISTRICT = amplify_core.QueryField(fieldName: "district");
   static final MANDAL = amplify_core.QueryField(fieldName: "mandal");
   static final COLLEGE = amplify_core.QueryField(fieldName: "college");
+  static final UPDATEDAT = amplify_core.QueryField(fieldName: "updatedAt");
   static final ISPOLICY = amplify_core.QueryField(fieldName: "isPolicy");
   static final GENDER = amplify_core.QueryField(fieldName: "gender");
   static final BRANCH = amplify_core.QueryField(fieldName: "branch");
@@ -382,7 +388,8 @@ class UserTable extends amplify_core.Model {
     ];
     
     modelSchemaDefinition.indexes = [
-      amplify_core.ModelIndex(fields: const ["id"], name: null)
+      amplify_core.ModelIndex(fields: const ["id"], name: null),
+      amplify_core.ModelIndex(fields: const ["team_code"], name: "userTablesByTeam_code")
     ];
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.id());
@@ -442,6 +449,12 @@ class UserTable extends amplify_core.Model {
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
+      key: UserTable.UPDATEDAT,
+      isRequired: false,
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.dateTime)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
       key: UserTable.ISPOLICY,
       isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.bool)
@@ -482,13 +495,6 @@ class UserTable extends amplify_core.Model {
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.nonQueryField(
       fieldName: 'createdAt',
-      isRequired: false,
-      isReadOnly: true,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.dateTime)
-    ));
-    
-    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.nonQueryField(
-      fieldName: 'updatedAt',
       isRequired: false,
       isReadOnly: true,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.dateTime)

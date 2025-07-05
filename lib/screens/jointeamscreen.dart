@@ -1,7 +1,11 @@
+import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:atl_membership/controllers/AuthController.dart';
+import 'package:atl_membership/controllers/UserTableController.dart';
+import 'package:atl_membership/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../utils/routes.dart';
+import '../services/TeamTableService.dart';
 
 class JoinTeamscreen extends StatefulWidget {
   const JoinTeamscreen({super.key});
@@ -12,11 +16,13 @@ class JoinTeamscreen extends StatefulWidget {
 
 class _JoinTeamscreenState extends State<JoinTeamscreen> {
   late final TextEditingController _searchController;
+  late final UserController _userController;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _searchController = TextEditingController();
+    _userController = Get.find<UserController>();
   }
 
   @override
@@ -24,6 +30,15 @@ class _JoinTeamscreenState extends State<JoinTeamscreen> {
     // TODO: implement dispose
     _searchController.dispose();
     super.dispose();
+  }
+
+  void _createTeam() async {
+    safePrint("user id is : ${_userController.userId}");
+    final String? teamCode = await TeamTableService.createTeam(_userController.userId.value);
+    if(teamCode!= null){
+      safePrint("team code generated is $teamCode");
+      Get.toNamed('${Routes.HOME}${Routes.TEAM}');
+    }
   }
 
   @override
@@ -52,7 +67,11 @@ class _JoinTeamscreenState extends State<JoinTeamscreen> {
                   style: TextStyle(color: Colors.black, fontSize: 32),
                 ),
                 OutlinedButton(
-                  onPressed: () => {Get.offNamed('${Routes.HOME}${Routes.TEAM}')},
+                  onPressed: () => {
+                    // Get.offNamed('${Routes.HOME}${Routes.TEAM}')
+                    _createTeam()
+
+                  },
                   style: OutlinedButton.styleFrom(
                     backgroundColor: Colors.blue,
                   ),
@@ -92,7 +111,9 @@ class _JoinTeamscreenState extends State<JoinTeamscreen> {
                     ),
                   ),
                 ),
-                OutlinedButton(onPressed: (){},style: OutlinedButton.styleFrom(
+                OutlinedButton(onPressed: (){
+                  safePrint("team code is ${_userController.teamId.value}");
+                },style: OutlinedButton.styleFrom(
                   backgroundColor: Colors.blue,
                 ), child: Text('search',style: TextStyle(color: Colors.white),)),
 

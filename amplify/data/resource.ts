@@ -19,6 +19,7 @@ const schema = a.schema({
     district: a.string(),
     mandal: a.string(),
     college: a.string(),
+    updatedAt: a.datetime(),
     team_code: a.id(),
     isPolicy: a.boolean().default(false),
     gender: a.enum(['MALE', 'FEMALE', 'OTHER']),
@@ -26,7 +27,11 @@ const schema = a.schema({
     attendance : a.hasMany('attendanceTable','user_id'),
     suggestion: a.hasMany('SuggestionsTable','user_id'),
     team: a.belongsTo('TeamTable','team_code')
-  }).authorization((allow) => [allow.guest(),allow.authenticated()]),
+  })
+   .secondaryIndexes((index) => [
+      index('team_code') // GSI for efficient querying by team_code
+    ])
+  .authorization((allow) => [allow.guest(),allow.authenticated()]),
 
   attendanceTable: a.model({
       user_id : a.string(),
@@ -46,11 +51,12 @@ const schema = a.schema({
     remarks: a.string(),
     timestamp: a.timestamp(),
     topics_covered: a.string()
-  }).authorization((allow) => [allow.guest(),allow.authenticated()]),
+  })
+  .authorization((allow) => [allow.guest(),allow.authenticated()]),
 
   TeamTable: a.model({
     team_code: a.id(),
-    team_members: a.json(),
+    team_members: a.string().array(),
     school_name: a.string(),
     district: a.string(),
     mandal: a.string(),

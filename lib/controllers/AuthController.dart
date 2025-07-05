@@ -52,7 +52,7 @@ class AuthController extends GetxController {
 
       if (session.isSignedIn) {
         await _fetchCognitoUserAttributes();
-        safePrint("User authenticated: ${_userController.userName.value} (${_userController.userId.value})");
+        safePrint("User authenticated: ${_userController.userName?.value} (${_userController.userId.value})");
       }
     } catch (e) {
       isAuthenticated.value = false;

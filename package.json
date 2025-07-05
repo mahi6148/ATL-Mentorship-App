@@ -15,14 +15,17 @@
   "license": "ISC",
   "devDependencies": {
     "@aws-amplify/backend": "^1.16.1",
-    "@aws-amplify/backend-cli": "^1.7.2",
+    "@aws-amplify/backend-cli": "^1.8.0",
+    "@aws-lambda-powertools/logger": "^2.22.0",
+    "@types/aws-lambda": "^8.10.150",
+    "@types/node": "^24.0.3",
     "aws-cdk-lib": "^2.189.1",
     "constructs": "^10.4.2",
     "esbuild": "^0.25.5",
-    "tsx": "^4.19.4",
+    "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "aws-amplify": "^6.15.0"
+    "aws-amplify": "^6.15.1"
   }
 }

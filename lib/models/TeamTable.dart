@@ -29,7 +29,7 @@ class TeamTable extends amplify_core.Model {
   static const classType = const _TeamTableModelType();
   final String id;
   final String? _team_code;
-  final String? _team_members;
+  final List<String>? _team_members;
   final String? _school_name;
   final String? _district;
   final String? _mandal;
@@ -56,7 +56,7 @@ class TeamTable extends amplify_core.Model {
     return _team_code;
   }
   
-  String? get team_members {
+  List<String>? get team_members {
     return _team_members;
   }
   
@@ -94,11 +94,11 @@ class TeamTable extends amplify_core.Model {
   
   const TeamTable._internal({required this.id, team_code, team_members, school_name, district, mandal, schoolUID, modules, user, createdAt, updatedAt}): _team_code = team_code, _team_members = team_members, _school_name = school_name, _district = district, _mandal = mandal, _schoolUID = schoolUID, _modules = modules, _user = user, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory TeamTable({String? id, String? team_code, String? team_members, String? school_name, String? district, String? mandal, int? schoolUID, String? modules, List<UserTable>? user}) {
+  factory TeamTable({String? id, String? team_code, List<String>? team_members, String? school_name, String? district, String? mandal, int? schoolUID, String? modules, List<UserTable>? user}) {
     return TeamTable._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
       team_code: team_code,
-      team_members: team_members,
+      team_members: team_members != null ? List<String>.unmodifiable(team_members) : team_members,
       school_name: school_name,
       district: district,
       mandal: mandal,
@@ -117,7 +117,7 @@ class TeamTable extends amplify_core.Model {
     return other is TeamTable &&
       id == other.id &&
       _team_code == other._team_code &&
-      _team_members == other._team_members &&
+      DeepCollectionEquality().equals(_team_members, other._team_members) &&
       _school_name == other._school_name &&
       _district == other._district &&
       _mandal == other._mandal &&
@@ -136,7 +136,7 @@ class TeamTable extends amplify_core.Model {
     buffer.write("TeamTable {");
     buffer.write("id=" + "$id" + ", ");
     buffer.write("team_code=" + "$_team_code" + ", ");
-    buffer.write("team_members=" + "$_team_members" + ", ");
+    buffer.write("team_members=" + (_team_members != null ? _team_members!.toString() : "null") + ", ");
     buffer.write("school_name=" + "$_school_name" + ", ");
     buffer.write("district=" + "$_district" + ", ");
     buffer.write("mandal=" + "$_mandal" + ", ");
@@ -149,7 +149,7 @@ class TeamTable extends amplify_core.Model {
     return buffer.toString();
   }
   
-  TeamTable copyWith({String? team_code, String? team_members, String? school_name, String? district, String? mandal, int? schoolUID, String? modules, List<UserTable>? user}) {
+  TeamTable copyWith({String? team_code, List<String>? team_members, String? school_name, String? district, String? mandal, int? schoolUID, String? modules, List<UserTable>? user}) {
     return TeamTable._internal(
       id: id,
       team_code: team_code ?? this.team_code,
@@ -164,7 +164,7 @@ class TeamTable extends amplify_core.Model {
   
   TeamTable copyWithModelFieldValues({
     ModelFieldValue<String?>? team_code,
-    ModelFieldValue<String?>? team_members,
+    ModelFieldValue<List<String>?>? team_members,
     ModelFieldValue<String?>? school_name,
     ModelFieldValue<String?>? district,
     ModelFieldValue<String?>? mandal,
@@ -188,7 +188,7 @@ class TeamTable extends amplify_core.Model {
   TeamTable.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
       _team_code = json['team_code'],
-      _team_members = json['team_members'],
+      _team_members = json['team_members']?.cast<String>(),
       _school_name = json['school_name'],
       _district = json['district'],
       _mandal = json['mandal'],
@@ -275,7 +275,8 @@ class TeamTable extends amplify_core.Model {
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
       key: TeamTable.TEAM_MEMBERS,
       isRequired: false,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+      isArray: true,
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.collection, ofModelName: amplify_core.ModelFieldTypeEnum.string.name)
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
